@@ -1,4 +1,5 @@
-RealTimePriceGRPC:
+<b>RealTimePriceGRPC:</b>
+
 It is small demo of gRPC service which has 2 methods. 
 
 GetBasePrice => returns object that contain ID and price.
