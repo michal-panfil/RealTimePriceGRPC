@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "PriceGrpcService";
+
+package price;
+
+service PriceProvider{
+	rpc GetBasePrice(PriceRequest) returns (PriceReply);
+}
+
+message PriceRequest{
+int32 id =1;
+}
+
+message PriceReply{
+	int32 id = 1;
+	string price = 2;
+}
