@@ -1,8 +1,8 @@
 RealTimePriceGRPC:
 It is small demo of gRPC service which has 2 methods. 
 
-GetBasePrice => returns object that contain ID and price
-GetRealTimePrices = > returns objects as a stream every 1 sek;
+GetBasePrice => returns object that contain ID and price.
+GetRealTimePrices = > returns objects as a stream every 1 sek.
 
 It is nothing sofisticate but helped me to understud gRPC idea.
 
