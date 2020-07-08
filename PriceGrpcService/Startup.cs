@@ -32,7 +32,6 @@ namespace PriceGrpcService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<GreeterService>();
                 endpoints.MapGrpcService<PriceService>();
 
                 endpoints.MapGet("/", async context =>
