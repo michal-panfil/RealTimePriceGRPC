@@ -6,6 +6,8 @@ package price;
 
 service PriceProvider{
 	rpc GetBasePrice(PriceRequest) returns (PriceReply);
+	rpc GetRealTimePrices(PriceRequest) returns(stream PriceReply);
+
 }
 
 message PriceRequest{

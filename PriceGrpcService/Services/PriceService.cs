@@ -25,5 +25,16 @@ namespace PriceGrpcService.Services
             //if(PriceRequest)
             return Task.FromResult(reply);
         }
+        public override async Task GetRealTimePrices(PriceRequest request, IServerStreamWriter<PriceReply> responseStream, ServerCallContext context)
+        {
+            Console.WriteLine("Proccesing : GetRealTimePrices");
+            for (int i = 0; i < 100; i++)
+            {
+                await Task.Delay(1000);
+                await responseStream.WriteAsync(new PriceReply { Id = 1 + 110, Price = (i + 2 * 1.12).ToString() });
+            }
+
+
+        }
     }
 }
