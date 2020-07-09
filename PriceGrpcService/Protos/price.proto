@@ -7,6 +7,7 @@ package price;
 service PriceProvider{
 	rpc GetBasePrice(PriceRequest) returns (PriceReply);
 	rpc GetRealTimePrices(PriceRequest) returns(stream PriceReply);
+	rpc GetRealTimePricesContinously(PriceRequest) returns(stream InstrumrntPriceReply);
 }
 
 message PriceRequest{
@@ -16,4 +17,10 @@ int32 id =1;
 message PriceReply{
 	int32 id = 1;
 	string price = 2;
+}
+
+message InstrumrntPriceReply{
+	string name = 1;
+	string price = 2;
+	string time = 3;
 }
