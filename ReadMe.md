@@ -1,33 +1,8 @@
 <b>RealTimePriceGRPC:</b>
 
-It is small demo of gRPC service which has 2 methods. 
+It is small demo of gRPC service which provides live data about prices of investing instruments like Gold or stock indexes (SP500).
+It parse data from one of investing page and returns stream of data with instrument name, last price and time.
 
-GetBasePrice => returns object that contain ID and price.
-GetRealTimePrices = > returns objects as a stream every 1 sek.
+Thanks!
 
-It is nothing sofisticate but helped me to understud gRPC idea.
-
-Thank you!
-
-Proto:
-
-syntax = "proto3";
-
-option csharp_namespace = "PriceGrpcService";
-
-package price;
-
-service PriceProvider{
-	rpc GetBasePrice(PriceRequest) returns (PriceReply);
-	rpc GetRealTimePrices(PriceRequest) returns(stream PriceReply);
-
-}
-
-message PriceRequest{
-int32 id =1;
-}
-
-message PriceReply{
-	int32 id = 1;
-	string price = 2;
-}
+![result](clientResult.png "result")
