@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PriceGrpcService.Models
 {
-    public static class PageDownloader
+    public class PageDownloader : IDataDownloader
     {
-        public static async  Task<string> DownloadPage(string pageUrl)
+        public  async Task<string> DownloadData(string pageUrl)
         {
             var httpClient = new HttpClient();
 

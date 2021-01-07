@@ -21,7 +21,7 @@ namespace ServiceTest.Models
                 txt = sr.ReadToEnd();
             }
 
-            var result =  PageParser.GetData(txt).Result;
+            var result = new PageParser().ParseData(txt).Result;
 
             Assert.IsTrue(result.Count == 14);
         }
@@ -29,7 +29,7 @@ namespace ServiceTest.Models
 
         public void ParsHtmlNullTest()
         {
-            var result = PageParser.GetData(null).Result;
+            var result = new PageParser().ParseData(null).Result;
             Assert.IsNull(result);
         }
         [Test]
@@ -42,7 +42,7 @@ namespace ServiceTest.Models
                 txt = sr.ReadToEnd();
             }
 
-            var result = PageParser.GetData(txt).Result;
+            var result = new PageParser().ParseData(txt).Result;
 
             Assert.IsTrue(result.Count == 0);
 

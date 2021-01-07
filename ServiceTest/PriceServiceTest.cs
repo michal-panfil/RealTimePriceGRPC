@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using PriceGrpcService;
+using PriceGrpcService.Models;
 using PriceGrpcService.Services;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace ServiceTest
         [SetUp]
         public void Setup() {
             Mock<ILogger<PriceService>> logger = new Mock<ILogger<PriceService>>();
-            Service = new PriceService(logger.Object);    
+            Service = new PriceService(logger.Object, new PageDownloader(), new PageParser() );    
         
         }
         [Test]

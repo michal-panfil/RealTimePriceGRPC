@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace PriceGrpcService.Models
 {
-    public class PageParser
+    public class PageParser : IDataParser
     {
-        public static async Task <List<InstrumentPrice>> GetData(string rawPage)
+        public async Task <List<InstrumentPrice>> ParseData(string rawPage)
         {
             if(String.IsNullOrEmpty(rawPage)) { return null; }
             List<InstrumentPrice> instruments = new List<InstrumentPrice>();
-            var dictInstruments =  Pars(rawPage);
+            var dictInstruments =  await Pars(rawPage);
             
             foreach (var item in dictInstruments )
             {
@@ -23,13 +23,15 @@ namespace PriceGrpcService.Models
             return instruments;
         }
 
-        private static Dictionary<string,string> Pars(string html)
+        private async  Task<Dictionary<string,string>> Pars(string html)
         {
             var trGroup = Regex.Matches(html, @"<tbody\b[^>]*>(.*?)<\/tbody>");
             var tdGroup = trGroup.Count > 1 ? Regex.Matches(trGroup[0]?.ToString() + trGroup[1]?.ToString(), @"<tr\b[^>]*>(.*?)<\/tr>") : null;
 
             var result = new Dictionary<string, string>();
             if(tdGroup != null) {
+                var task = Task.Run(() =>
+                {
                 foreach (var item in tdGroup)
                 {
                     var x = (Regex.Matches(item.ToString(), @"<a\b[^>]*>(.*?)<\/a>"));
@@ -39,6 +41,9 @@ namespace PriceGrpcService.Models
 
                     result.Add(key, value);
                 }
+
+                });
+                await task;
             }
             return result;
         }

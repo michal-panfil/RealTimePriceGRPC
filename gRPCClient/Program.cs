@@ -12,13 +12,14 @@ namespace gRPCClient
         {
             var channel = GrpcChannel.ForAddress("https://localhost:5001");
             var client = new PriceProvider.PriceProviderClient(channel);
-            var input1 = new PriceRequest { Id = 1 };
+            var input = new PriceRequest { Id = 1 };
 
-            using ( var call =  client.GetRealTimePricesContinously(input1))
+            using ( var call =  client.GetRealTimePricesContinously(input))
             {
                 while (await call.ResponseStream.MoveNext())
                 {
                     var current = call.ResponseStream.Current;
+
                     Console.WriteLine($"{current.Name} : {current.Price} : { current.Time} ");
                     Console.WriteLine("------------------------");
                 } 

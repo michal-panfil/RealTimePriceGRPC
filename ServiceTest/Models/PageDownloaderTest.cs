@@ -14,7 +14,7 @@ namespace ServiceTest.Models
         {
             var url = $"https://www.investing.com/commodities/real-time-futures";
 
-            var result =  PageDownloader.DownloadPage(url).Result;
+            var result =  new PageDownloader().DownloadData(url).Result;
 
             Assert.IsNotNull(result);
         }
@@ -23,7 +23,7 @@ namespace ServiceTest.Models
         {
             var url = $"https://www.aefaefeafafegvfaeg.com";
 
-            var result = PageDownloader.DownloadPage(url).Result;
+            var result = new PageDownloader().DownloadData(url).Result;
 
             Assert.IsNull(result);
         }

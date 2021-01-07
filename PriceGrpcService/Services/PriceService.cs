@@ -12,10 +12,14 @@ namespace PriceGrpcService.Services
     public class PriceService : PriceProvider.PriceProviderBase
     {
         private readonly ILogger<PriceService> logger;
-        
-        public PriceService(ILogger<PriceService> logger)
+        private readonly IDataDownloader downloader;
+        private readonly IDataParser parser;
+
+        public PriceService(ILogger<PriceService> logger, IDataDownloader downloader, IDataParser parser)
         {
             this.logger = logger;
+            this.downloader = downloader;
+            this.parser = parser;
         }
 
         public override async Task GetRealTimePricesContinously(PriceRequest request, IServerStreamWriter<InstrumrntPriceReply> responseStream, ServerCallContext context)
@@ -29,17 +33,15 @@ namespace PriceGrpcService.Services
                 while (rawPage == "" || tries > 5 || rawPage == null)
                 {
 
-                    rawPage = await PageDownloader.DownloadPage("https://www.investing.com/commodities/real-time-futures");
+                    rawPage = await downloader.DownloadData("https://www.investing.com/commodities/real-time-futures");
                     tries++;
-
                 }
 
-                var instruments = await PageParser.GetData(rawPage);
+                var instruments = await parser.ParseData(rawPage);
 
                 instruments.ForEach(async i => await responseStream.WriteAsync(new InstrumrntPriceReply
                 { Name = i.Name, Price = i.Price, Time = i.Time.ToString() }));
 
-                await Task.Delay(3000);
                 count++;
             }
         }
